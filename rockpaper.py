@@ -1,33 +1,40 @@
 import random
 
-computer = ["Rock", "Paper", "Scissors"]
-print("Rock paper scissors!")
-game = int(input("Play? 1 for yes, 2 for no: "))
+def get_user_choice():
+    while True:
+        try:
+            choice = int(input("1 for Rock, 2 for Paper, 3 for Scissors: "))
+            if choice in (1, 2, 3):
+                return choice
+            else:
+                print("Invalid choice. Please choose 1, 2, or 3.")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
 
-if game == 2:
-    print("Okay, then why even open the game?")
-    exit()
+def play_game():
+    computer = ["Rock", "Paper", "Scissors"]
+    print("Rock, Paper, Scissors!")
 
-choice = int(input("1 for rock, 2 for paper, 3 for scissors: "))
+    while True:
+        game = input("Play? (yes/no): ").strip().lower()
+        if game == "no":
+            print("Thanks for playing!")
+            break
+        elif game == "yes":
+            user_choice = get_user_choice()
+            computer_choice = random.choice(computer)
+            print(f"Computer chose {computer_choice}")
 
-if choice == 1:
-    choice = "Rock"
-elif choice == 2:
-    choice = "Paper"
-elif choice == 3:
-    choice = "Scissors"
-else:
-    print("Invalid choice. Please choose a number between 1 and 3.")
-    exit()
+            if user_choice == computer.index(computer_choice) + 1:
+                print("It's a tie!")
+            elif (user_choice == 1 and computer_choice == "Scissors") or \
+                 (user_choice == 2 and computer_choice == "Rock") or \
+                 (user_choice == 3 and computer_choice == "Paper"):
+                print("You win!")
+            else:
+                print("Computer wins!")
+        else:
+            print("Invalid input. Please enter 'yes' or 'no'.")
 
-randomChoice = random.choice(computer)
-print(randomChoice)
-
-if choice == randomChoice:
-    print("Tie!")
-elif (choice == "Rock" and randomChoice == "Paper") or \
-     (choice == "Paper" and randomChoice == "Scissors") or \
-     (choice == "Scissors" and randomChoice == "Rock"):
-    print("You lost!")
-else:
-    print("You win!")
+if __name__ == "__main__":
+    play_game()
